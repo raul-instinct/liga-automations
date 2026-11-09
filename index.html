@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ליגה אוטומציות | אוטומציות AI בליגה אחרת</title>
+<meta name="description" content="בוטים, קמפיינים, ניהול רשתות ודפי נחיתה. אצלנו שום ליד לא נשכח.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0820;--bg2:#120e3a;--ink:#f4f2ff;--mute:#a9a4d6;--blue:#4f6bff;--violet:#8a4dff;--yellow:#ffc93c;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--g:linear-gradient(120deg,#6f8bff,#b06bff 55%,#ffc93c)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Rubik,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60vw 50vh at 85% 0,rgba(79,107,255,.35),transparent),radial-gradient(50vw 50vh at 5% 40%,rgba(138,77,255,.28),transparent),radial-gradient(40vw 40vh at 80% 100%,rgba(255,201,60,.10),transparent)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:auto;padding:0 22px}
+.grad{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* nav */
+nav{position:fixed;top:0;inset-inline:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,8,32,.55);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:21px}
+.brand svg{width:34px;height:34px}
+nav ul{display:flex;gap:22px;list-style:none;margin-inline-start:auto;color:var(--mute);font-size:15px}
+nav ul a:hover{color:#fff}
+.btn{display:inline-block;border:0;cursor:pointer;font:700 16px Rubik;padding:13px 26px;border-radius:999px;background:var(--yellow);color:#1a1240;transition:.25s;box-shadow:0 8px 30px rgba(255,201,60,.25)}
+.btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 40px rgba(255,201,60,.4)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{background:var(--card)}
+.lang{background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;font:500 14px Rubik}
+/* hero */
+.hero{min-height:100vh;display:grid;align-items:center;padding:110px 0 60px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--mute);font-size:14px;margin-bottom:22px}
+.pill i{width:8px;height:8px;border-radius:50%;background:#35e08a;box-shadow:0 0 0 0 #35e08a;animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px transparent}}
+h1{font-size:clamp(40px,6.2vw,84px);line-height:1.05;font-weight:900;letter-spacing:-1px}
+.hero p.sub{font-size:clamp(18px,2vw,22px);color:var(--mute);margin:24px 0 34px;max-width:560px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+/* phone */
+.stage{position:relative;display:grid;place-items:center;min-height:560px}
+.robot{position:absolute;width:150px;bottom:20px;left:-30px;z-index:3;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 20px 30px rgba(79,107,255,.5))}
+@keyframes float{50%{transform:translateY(-14px) rotate(-3deg)}}
+.phone{width:310px;border-radius:38px;padding:12px;background:linear-gradient(160deg,#2b2470,#150f42);border:1px solid var(--line);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 80px rgba(110,80,255,.35);transform:rotate(3deg)}
+.screen{background:#0d1a1a;border-radius:28px;height:540px;overflow:hidden;display:flex;flex-direction:column}
+.bar{background:#128c7e;padding:14px 16px;display:flex;gap:10px;align-items:center;font-weight:700;font-size:15px}
+.bar b{width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:16px}
+.chat{flex:1;padding:14px;display:flex;flex-direction:column;gap:8px;justify-content:flex-end;background:#0b141a}
+.m{flex:none;max-width:82%;padding:7px 12px;border-radius:14px;font-size:14px;opacity:0;transform:translateY(12px) scale(.96);transition:.45s}
+.m.show{opacity:1;transform:none}
+.m.in{background:#202c33;align-self:flex-start;border-top-left-radius:4px}
+.m.out{background:#005c4b;align-self:flex-end;border-top-right-radius:4px}
+.m small{display:block;color:#8fb;font-size:11px;margin-top:2px}
+.ok{flex:none;align-self:center;background:linear-gradient(120deg,#35e08a,#12b6a0);color:#042;padding:7px 16px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;transform:scale(.8);transition:.5s}
+.ok.show{opacity:1;transform:none}
+.float{position:absolute;background:rgba(20,15,60,.85);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;padding:12px 16px;font-size:14px;box-shadow:0 20px 50px rgba(0,0,0,.4);animation:float 6s ease-in-out infinite}
+.float b{font-size:24px;display:block;line-height:1.1}
+.f1{inset-inline-end:-24px;top:70px}.f2{inset-inline-start:-34px;bottom:90px;animation-delay:-2s}
+.flow{position:relative;height:440px;border-block:1px solid var(--line);overflow:hidden;background:radial-gradient(60% 100% at 50% 50%,rgba(138,77,255,.18),transparent)}.flow canvas{position:absolute;inset:0;width:100%;height:100%}.flowtxt{position:absolute;inset:0;display:grid;align-content:start;padding-top:36px;text-align:center;pointer-events:none}.flowtxt h2{margin:6px 0 0}
+/* sections */
+section{padding:110px 0}
+.eyebrow{color:var(--yellow);font-weight:700;letter-spacing:1px;font-size:14px}
+h2{font-size:clamp(32px,4.6vw,58px);line-height:1.1;font-weight:900;margin:10px 0 18px}
+.lead{color:var(--mute);font-size:19px;max-width:640px}
+.reveal{opacity:0;transform:translateY(40px);transition:1s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+/* services */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:50px}
+.card{grid-column:span 2;position:relative;border:1px solid var(--line);border-radius:26px;padding:30px;background:var(--card);overflow:hidden;transition:.3s}
+.card:nth-child(4),.card:nth-child(5){grid-column:span 3}
+.card:before{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--x,50%) var(--y,0),rgba(138,100,255,.30),transparent 60%);opacity:0;transition:.3s}
+.card:hover{transform:translateY(-6px);border-color:rgba(176,107,255,.6)}
+.card:hover:before{opacity:1}
+.card>*{position:relative}
+.ic{font-size:34px;width:62px;height:62px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,rgba(79,107,255,.35),rgba(138,77,255,.35));margin-bottom:20px}
+.card h3{font-size:24px;margin-bottom:8px}
+.card p{color:var(--mute);font-size:16px}
+.card ul{list-style:none;margin-top:14px;font-size:14px;color:#cfc9ff}
+.card li:before{content:"✓ ";color:#35e08a}
+/* journey */
+.journey{background:linear-gradient(180deg,transparent,rgba(79,107,255,.07),transparent)}
+.path{position:relative;margin-top:60px;display:grid;gap:26px}
+.path:before{content:"";position:absolute;inset-block:10px;inset-inline-start:27px;width:3px;background:var(--line)}
+.path .prog{position:absolute;inset-block-start:10px;inset-inline-start:27px;width:3px;height:0;background:var(--g);box-shadow:0 0 16px #8a4dff;border-radius:3px}
+.step{display:flex;gap:26px;align-items:flex-start;opacity:.35;transition:.5s}
+.step.on{opacity:1}
+.dot{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--bg2);border:2px solid var(--line);font-size:24px;z-index:1;transition:.5s}
+.step.on .dot{border-color:var(--yellow);box-shadow:0 0 30px rgba(255,201,60,.5)}
+.step h3{font-size:24px}.step p{color:var(--mute)}
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:50px}
+.col{border-radius:26px;padding:32px;border:1px solid var(--line)}
+.col.bad{background:rgba(255,80,80,.05)}
+.col.good{background:linear-gradient(160deg,rgba(79,107,255,.2),rgba(138,77,255,.15));border-color:rgba(176,107,255,.5)}
+.col h3{margin-bottom:16px;font-size:22px}
+.col li{list-style:none;padding:9px 0;border-bottom:1px solid var(--line);color:#dcd8ff}
+.bad li:before{content:"✕ ";color:#ff6b6b}.good li:before{content:"✓ ";color:#35e08a}
+/* steps */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+.how .card{grid-column:auto}
+.num{font-size:64px;font-weight:900;line-height:1}
+/* form */
+.formbox{display:grid;grid-template-columns:1fr 1fr;gap:40px;border:1px solid var(--line);border-radius:34px;padding:50px;background:linear-gradient(150deg,rgba(79,107,255,.18),rgba(138,77,255,.12));position:relative;overflow:hidden}
+form{display:grid;gap:14px}
+input,textarea,select{width:100%;padding:15px 18px;border-radius:14px;border:1px solid var(--line);background:rgba(10,8,32,.6);color:var(--ink);font:16px Rubik}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--violet)}
+textarea{min-height:100px;resize:vertical}
+.hp{position:absolute;left:-9999px}
+.msg{min-height:24px;font-weight:700;color:#35e08a}
+footer{border-top:1px solid var(--line);padding:40px 0;color:var(--mute);text-align:center;font-size:14px}
+.wa{position:fixed;bottom:22px;inset-inline-start:22px;z-index:60;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:30px;box-shadow:0 10px 30px rgba(37,211,102,.5);transition:.25s}
+.wa:hover{transform:scale(1.12) rotate(-8deg)}
+@media(max-width:900px){
+ nav ul{display:none}.nav-lang{margin-inline-start:auto}
+ .hero .wrap,.formbox,.cmp{grid-template-columns:1fr}
+ .stage{min-height:auto;margin-top:30px}.robot{width:100px;left:0}.f1,.f2{display:none}
+ .grid{grid-template-columns:1fr}.card,.card:nth-child(4),.card:nth-child(5){grid-column:auto}
+ .how{grid-template-columns:1fr}.formbox{padding:28px}section{padding:70px 0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+ <a class="brand" href="#top"><svg viewBox="0 0 64 64"><rect x="6" y="8" width="52" height="48" rx="20" fill="#f2f4ff"/><rect x="12" y="15" width="40" height="34" rx="14" fill="#241e73"/><ellipse cx="24" cy="31" rx="4.5" ry="6" fill="#aee6ff"/><ellipse cx="40" cy="31" rx="4.5" ry="6" fill="#aee6ff"/></svg><span data-en="LIGA automations">ליגה אוטומציות</span></a>
+ <ul><li><a href="#services" data-en="Services">שירותים</a></li><li><a href="#journey" data-en="How we work">איך זה עובד</a></li><li><a href="#why" data-en="Why us">למה אנחנו</a></li></ul>
+ <button class="lang nav-lang" id="lang">EN</button>
+ <a class="btn" href="#contact" data-en="Let's talk">בואו נדבר</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+ <div>
+  <div class="pill"><i></i><span data-en="Taking new customers now">מקבלים לקוחות חדשים עכשיו</span></div>
+  <h1><span data-en="AI automations">אוטומציות AI</span><br><span class="grad" data-en="in a different league">בליגה אחרת</span></h1>
+  <p class="sub" data-en="Bots, campaigns, social media and landing pages, all in one place. Nothing slips through.">בוטים, קמפיינים, ניהול רשתות ודפי נחיתה, הכול במקום אחד. אצלנו שום ליד לא נשכח.</p>
+  <div class="cta"><a class="btn" href="#contact" data-en="Let's build something">בואו נבנה משהו</a><a class="btn ghost" href="#services" data-en="What do we do?">מה אנחנו עושים?</a></div>
+ </div>
+ <div class="stage">
+  <svg class="robot" id="robot" viewBox="0 0 64 64"><rect x="6" y="8" width="52" height="48" rx="20" fill="#f2f4ff"/><rect x="12" y="15" width="40" height="34" rx="14" fill="#241e73"/><g id="eyes"><ellipse cx="24" cy="31" rx="4.5" ry="6" fill="#aee6ff"/><ellipse cx="40" cy="31" rx="4.5" ry="6" fill="#aee6ff"/></g><path d="M27 41q5 4 10 0" stroke="#aee6ff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+  <div class="phone"><div class="screen">
+   <div class="bar"><b>🤖</b><span data-en="LIGA bot · online">בוט ליגה · מחובר</span></div>
+   <div class="chat" id="chat">
+    <div class="m in" data-en="Hi, I saw your ad. Do you have room this week?">היי, ראיתי את המודעה. יש לכם מקום השבוע?<small>21:47</small></div>
+    <div class="m out" data-en="Hi! Yes. I'll book you now. What's your name?">היי! בטח, אסדר לך עכשיו. איך קוראים לך?<small>21:47 ✓✓</small></div>
+    <div class="m in" data-en="Dana">דנה<small>21:48</small></div>
+    <div class="m out" data-en="Dana, Tuesday at 10:00 or Wednesday at 16:00?">דנה, יום שלישי ב-10:00 או רביעי ב-16:00?<small>21:48 ✓✓</small></div>
+    <div class="m in" data-en="Tuesday!">שלישי!<small>21:48</small></div>
+    <div class="ok" data-en="✓ Meeting booked · lead saved">✓ נקבעה פגישה · הליד נשמר</div>
+   </div>
+  </div></div>
+  <div class="float f1"><b class="grad" id="cnt">0</b><span data-en="new leads this week">לידים חדשים השבוע</span></div>
+  <div class="float f2"><b>⚡ 3 <span data-en="sec">שנ׳</span></b><span data-en="to the first reply">לתגובה הראשונה</span></div>
+ </div>
+</div></header>
+
+<div class="flow" id="flow"><canvas id="cv"></canvas><div class="flowtxt"><div class="eyebrow" data-en="LEAD FLOW">זרימת לידים</div><h2 data-en="Every lead gets caught" >כל ליד <span class="grad">נתפס</span></h2></div></div>
+
+<section id="services"><div class="wrap">
+ <div class="reveal"><div class="eyebrow" data-en="WHAT WE DO">מה אנחנו עושים</div><h2 data-en="Everything your business needs to get customers" >הכול כדי שהעסק שלכם יביא לקוחות</h2><p class="lead" data-en="One team. Five services. They all work together.">צוות אחד, חמישה שירותים, והכול עובד ביחד.</p></div>
+ <div class="grid">
+  <div class="card reveal"><div class="ic">🤖</div><h3 data-en="WhatsApp and AI bots">בוטים ב-WhatsApp ו-AI</h3><p data-en="A bot that answers, qualifies and books meetings at 3 AM too.">בוט שעונה, מסנן וקובע פגישות, גם בשלוש בלילה.</p><ul><li data-en="Instant replies">מענה מיידי</li><li data-en="Booking and reminders">קביעת תורים ותזכורות</li></ul></div>
+  <div class="card reveal"><div class="ic">🎯</div><h3 data-en="Facebook and Instagram campaigns">קמפיינים בפייסבוק ואינסטגרם</h3><p data-en="We build, run and tune ads that bring leads and clicks, not just views.">בונים, מריצים ומשפרים מודעות שמביאות לידים ולחיצות, לא רק צפיות.</p><ul><li data-en="Leads and clicks campaigns">קמפייני לידים ולחיצות</li><li data-en="Weekly report">דוח שבועי</li></ul></div>
+  <div class="card reveal"><div class="ic">📱</div><h3 data-en="Social media upkeep">תחזוקת רשתות חברתיות</h3><p data-en="Posts, stories and replies. Your pages stay alive and sharp.">פוסטים, סטורי ותגובות. העמודים שלכם חיים ומדויקים.</p><ul><li data-en="Content calendar">לוח תוכן</li><li data-en="Branded design">עיצוב מותג</li></ul></div>
+  <div class="card reveal"><div class="ic">🧲</div><h3 data-en="Nothing is left behind">שום ליד לא נשכח</h3><p data-en="Every form, message and call is saved, answered and followed up until it closes.">כל טופס, הודעה ושיחה נשמרים, נענים ועוברים מעקב עד שהם נסגרים.</p><ul><li data-en="Instant alert to you">התראה מיידית אליכם</li><li data-en="Automatic follow-up">מעקב אוטומטי</li><li data-en="Everything in one sheet">הכול בגיליון אחד</li></ul></div>
+  <div class="card reveal"><div class="ic">🚀</div><h3 data-en="Landing pages">דפי נחיתה</h3><p data-en="Fast, sharp pages that turn clicks into contacts, built for phones.">דפים מהירים וחדים שהופכים קליקים לפניות, בנויים לנייד.</p><ul><li data-en="Lead form that saves automatically">טופס שנשמר אוטומטית</li><li data-en="Live in days">באוויר תוך ימים</li></ul></div>
+ </div>
+</div></section>
+
+<section class="journey" id="journey"><div class="wrap">
+ <div class="reveal"><div class="eyebrow" data-en="THE JOURNEY OF A LEAD">מסע של ליד</div><h2 data-en="From the first click to a closed deal" >מהקליק הראשון ועד העסקה</h2><p class="lead" data-en="Watch the path light up as you scroll.">גללו וראו איך המסלול נדלק, שלב אחרי שלב.</p></div>
+ <div class="path" id="path"><div class="prog" id="prog"></div>
+  <div class="step"><div class="dot">📣</div><div><h3 data-en="1. An ad or post">1. מודעה או פוסט</h3><p data-en="A campaign brings the right person.">קמפיין מביא את האדם הנכון.</p></div></div>
+  <div class="step"><div class="dot">🖥️</div><div><h3 data-en="2. A landing page">2. דף נחיתה</h3><p data-en="A sharp page that speaks to him.">דף חד שמדבר אליו.</p></div></div>
+  <div class="step"><div class="dot">📊</div><div><h3 data-en="3. Saved and alerted">3. נשמר ומתריע</h3><p data-en="A row in the sheet and an alert on your phone.">שורה בגיליון והתראה בטלפון שלכם.</p></div></div>
+  <div class="step"><div class="dot">🤝</div><div><h3 data-en="4. Follow-up until closing">4. מעקב עד סגירה</h3><p data-en="Nothing is left behind.">שום דבר לא נשכח.</p></div></div>
+ </div>
+</div></section>
+
+<section id="why"><div class="wrap">
+ <div class="reveal"><div class="eyebrow" data-en="WHY US">למה אנחנו</div><h2 data-en="Stop doing it all by hand" >תפסיקו לעשות הכול ידנית</h2></div>
+ <div class="cmp">
+  <div class="col bad reveal"><h3 data-en="Without us">בלעדינו</h3><ul><li data-en="A lead writes at night, gets a reply tomorrow">ליד כותב בלילה ומקבל תשובה מחר</li><li data-en="Messages are lost between apps">הודעות הולכות לאיבוד בין אפליקציות</li><li data-en="The page is dead for weeks">העמוד מת לשבועות</li><li data-en="Ads run, nobody checks">מודעות רצות ואף אחד לא בודק</li></ul></div>
+  <div class="col good reveal"><h3 data-en="With LIGA">עם ליגה</h3><ul><li data-en="Reply in seconds, 24/7">תשובה תוך שניות, 24/7</li><li data-en="Every lead in one place">כל ליד במקום אחד</li><li data-en="Pages that are active and sharp">עמודים פעילים וחדים</li><li data-en="Weekly campaign tuning">כיוונון קמפיינים כל שבוע</li></ul></div>
+ </div>
+ <div class="how">
+  <div class="card reveal"><div class="num grad">1</div><h3 data-en="Leave details">משאירים פרטים</h3><p data-en="Short form below.">טופס קצר למטה.</p></div>
+  <div class="card reveal"><div class="num grad">2</div><h3 data-en="We call back">חוזרים אליכם</h3><p data-en="To understand what you need.">כדי להבין מה צריך.</p></div>
+  <div class="card reveal"><div class="num grad">3</div><h3 data-en="We build the first automation">בונים את האוטומציה הראשונה</h3><p data-en="Together, fast.">יחד, מהר.</p></div>
+ </div>
+</div></section>
+
+<section id="contact"><div class="wrap"><div class="formbox reveal">
+ <div><div class="eyebrow" data-en="READY?">מוכנים?</div><h2 data-en="The form is sent, the lead is not forgotten." >הטופס נשלח, <span class="grad">הליד לא נשכח.</span></h2><p class="lead" data-en="Leave details and we'll get back to you.">השאירו פרטים ונחזור אליכם.</p></div>
+ <form id="f" autocomplete="on">
+  <input name="name" required placeholder="שם מלא" data-enp="Full name">
+  <input name="phone" required type="tel" placeholder="טלפון" data-enp="Phone">
+  <input name="business" placeholder="שם העסק" data-enp="Business name">
+  <select name="interest"><option value="" data-en="What are you interested in?">במה מעוניינים?</option><option data-en="Bot">בוט</option><option data-en="Campaigns">קמפיינים</option><option data-en="Social media">רשתות חברתיות</option><option data-en="Landing page">דף נחיתה</option><option data-en="All of it">הכול</option></select>
+  <textarea name="message" placeholder="ספרו לנו בקצרה" data-enp="Tell us briefly"></textarea>
+  <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button class="btn" data-en="Send">שליחה</button><div class="msg" id="msg"></div>
+ </form>
+</div></div></section>
+
+<footer>© 2026 <span data-en="LIGA automations · AI process automation for small businesses">ליגה אוטומציות · אוטומציה של תהליכים עם AI לעסקים קטנים</span></footer>
+<a class="wa" href="#contact" aria-label="WhatsApp">💬</a>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+// language toggle
+let en=false;
+$$('[data-en]').forEach(e=>e._he=e.innerHTML);
+$$('[data-enp]').forEach(e=>e._hep=e.placeholder);
+$('#lang').onclick=()=>{en=!en;document.documentElement.lang=en?'en':'he';document.documentElement.dir=en?'ltr':'rtl';
+ $$('[data-en]').forEach(e=>{const s=e.dataset.en;if(e.querySelector('small')){const sm=e.querySelector('small').outerHTML;e.innerHTML=en?s+sm:e._he}else e.innerHTML=en?s:e._he});
+ $$('[data-enp]').forEach(e=>e.placeholder=en?e.dataset.enp:e._hep);
+ $('#lang').textContent=en?'עב':'EN';};
+// lead flow canvas
+// lead flow canvas: leads stream in, get caught by the core, leave saved
+(()=>{const box=$('#flow'),cv=$('#cv'),x=cv.getContext('2d');let w,h,dpr,ps=[],mx=-999,my=-999,vis=true,t=0;
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function size(){dpr=Math.min(devicePixelRatio||1,2);w=box.clientWidth;h=box.clientHeight;cv.width=w*dpr;cv.height=h*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+size();addEventListener('resize',size);
+box.addEventListener('pointermove',e=>{const r=box.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
+box.addEventListener('pointerleave',()=>{mx=my=-999});
+new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(box);
+const N=w<700?70:140;
+function spawn(p){p.x=Math.random()*w; p.y=-10-Math.random()*h*.3; p.vx=(Math.random()-.5)*.6; p.vy=.8+Math.random()*1.6; p.r=1.5+Math.random()*2.5; p.saved=false; p.a=.35+Math.random()*.5; p.hue=Math.random()<.5?225:275; return p}
+for(let i=0;i<N;i++){const p=spawn({});p.y=Math.random()*h;ps.push(p)}
+function frame(){requestAnimationFrame(frame);if(!vis)return;t+=.016;x.clearRect(0,0,w,h);
+ const cx=w/2,cy=h*.66,gy=cy; // catching line at the middle
+ // core glow
+ const g=x.createRadialGradient(cx,cy,0,cx,cy,230);g.addColorStop(0,'rgba(255,201,60,.22)');g.addColorStop(1,'rgba(255,201,60,0)');x.fillStyle=g;x.fillRect(0,0,w,h);
+ // gate beam
+ x.strokeStyle='rgba(255,201,60,.55)';x.lineWidth=2;x.shadowColor='#ffc93c';x.shadowBlur=18;x.beginPath();x.moveTo(w*.12,gy);x.lineTo(w*.88,gy);x.stroke();x.shadowBlur=0;
+ for(const p of ps){
+  // funnel: before the gate, drift toward center column; after, spread out calmly
+  if(!p.saved){p.vx+=(cx-p.x)*.00012*(1+p.y/h);}
+  const dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy);
+  if(d<120){const f=(120-d)/120;p.vx+=dx/d*f*.9;p.vy+=dy/d*f*.9}
+  p.vx*=.985;p.x+=p.vx;p.y+=p.vy*(p.saved?.7:1);
+  if(!p.saved&&p.y>=gy){p.saved=true;p.vy=.6+Math.random()*.8;p.vx=(Math.random()-.5)*2.2;p.flash=1}
+  if(p.y>h+10||p.x<-20||p.x>w+20)spawn(p);
+  const col=p.saved?'255,201,60':`${p.hue===225?'120,150':'176,120'},255`;
+  x.beginPath();x.fillStyle=`rgba(${col},${p.a})`;x.shadowColor=`rgba(${col},1)`;x.shadowBlur=p.saved?14:8;x.arc(p.x,p.y,p.r*(p.saved?1.25:1),0,6.283);x.fill();
+  if(p.flash>0){x.beginPath();x.strokeStyle=`rgba(255,201,60,${p.flash})`;x.lineWidth=1.5;x.arc(p.x,p.y,5+(1-p.flash)*16,0,6.283);x.stroke();p.flash-=.09}
+ }
+ x.shadowBlur=0;
+}
+frame();})();
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+$$('.reveal').forEach((e,i)=>{e.style.transitionDelay=(i%3)*.08+'s';io.observe(e)});
+// chat loop
+const msgs=$$('#chat>*');
+function run(){msgs.forEach(m=>m.classList.remove('show'));msgs.forEach((m,i)=>setTimeout(()=>m.classList.add('show'),700+i*1100));setTimeout(run,700+msgs.length*1100+3500)}run();
+// counter
+let c=0;const cnt=$('#cnt');setInterval(()=>{c=c>=52?0:c+1;cnt.textContent=c},120);
+// robot eyes follow
+const eyes=$('#eyes');addEventListener('pointermove',e=>{const r=$('#robot').getBoundingClientRect();const dx=(e.clientX-(r.left+r.width/2)),dy=(e.clientY-(r.top+r.height/2));const d=Math.hypot(dx,dy)||1;eyes.style.transform=`translate(${dx/d*3}px,${dy/d*3}px)`});
+// card spotlight
+$$('.card').forEach(k=>k.addEventListener('pointermove',e=>{const r=k.getBoundingClientRect();k.style.setProperty('--x',e.clientX-r.left+'px');k.style.setProperty('--y',e.clientY-r.top+'px')}));
+// journey progress
+const path=$('#path'),prog=$('#prog'),steps=$$('.step');
+function jp(){const r=path.getBoundingClientRect(),vh=innerHeight;const p=Math.min(1,Math.max(0,(vh*.65-r.top)/r.height));prog.style.height=p*(r.height-20)+'px';steps.forEach((s,i)=>s.classList.toggle('on',p>=i/steps.length+.04))}
+addEventListener('scroll',jp,{passive:true});jp();
+// form (mock: phase 3 will POST to /api/lead)
+$('#f').onsubmit=e=>{e.preventDefault();if($('#f').website.value)return;$('#msg').textContent=en?'Thanks! (mock: nothing was saved)':'תודה! (מוק: שום דבר לא נשמר)';$('#f').reset()};
+</script>
+</body>
+</html>
